@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="en"><head><title>Node.js</title><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="bower_components/reveal-js/css/reveal.min.css"><link rel="stylesheet" href="bower_components/reveal-js/css/theme/night.css"><link rel="stylesheet" href="bower_components/github-fork-ribbon-css/gh-fork-ribbon.css"><link rel="stylesheet" href="bower_components/highlightjs/styles/default.css"><link rel="stylesheet" href="src/styles/common.css"><style>.reveal section img {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 20px;
+    margin: auto;
+    display: block;
+}
+
+.reveal section img.logo {
+    height: 200px;
+    max-height: 35vh;
+}
+
+.split {
+    display: flex;
+}
+.split .left, .split .right {
+    flex-grow: 1;
+}
+
+.reveal section sup {
+    font-size: 0.7em;
+}
+
+.reveal section pre {
+    margin-left: 1%;
+    margin-right: 1%;
+    width: 98%;
+}
+
+.reveal pre code {
+     max-height: none;
+}
+
+</style></head><body><a href="https://github.com/purplecode/lightning-talk-nodejs" title="Fork me on Github" class="github-fork-ribbon right-top"></a><div class="reveal"><div class="slides"><section><h1>Node.js</h1><h1>Introduction</h1><h4>by Mateusz Jaworski</h4><h4>April 2016</h4></section><section><section><img src="src/images/nodejs.png" class="logo"><ul><li>open-source, cross-platform, MIT license</li><li>asynchronous, event driven</li><li>event loop as a language construct not library</li><li>shell/repl (read-eval-print-loop)</li><li>npm - package manager</li><li>other: Twisted (python), Vert.x (Java, Ruby, Scala, Clojure...)</li></ul></section><section><h2>History</h2><ul><li>2009 - originally written by Ryan Dahl</li><li>2011 - added npm and support for Windows</li><li>2014 - Fedor Indutny started io.js, a fork of Node.js</li><li>2015 - Node.js v0.12 and io.js v3.3 merged back into Node v4.0</li></ul></section></section><section><section><h2>Architecture</h2><img height="500" src="src/images/architecture.png"><small>@source: &nbsp;<a href="http://mcgill-csus.github.io/student_projects/Submission2.pdf">An Inside Look at the Architecture of NodeJS</a></small></section><section><h2>Architecture</h2><ul><li>core written in C, C++</li><li>single main thread, non-blocking I/O calls</li><li>no cost of thread context switching</li><li>thread pool for parallel tasks, when done main thread wakes up and executes the registered callback</li><li>registered within operating system, operating system issues a callback on connection</li></ul></section><section><img src="src/images/v8.png" class="logo"><h2>Google’s V8 JavaScript engine</h2><ul><li>compiles JavaScript into native code</li><li>garbage collector</li><li>optimizer</li><li>re-optimizer (at runtime)<ul><li>based on heuristics of the code's execution profile</li><li>inline expansion</li><li>inline caching</li><li>copy elision</li></ul></li></ul></section><section><img src="src/images/libuv.png" class="logo"><h2>libuv - multi-platform asynchronous I/O</h2><ul><li>developed for use by Node.js, also used by others</li><li>event loop</li><li>asynchronous TCP/UDP sockets and DNS resolution</li><li>asynchronous file system operations</li><li>child processes</li><li>thread pool</li></ul></section></section><section><h2>The rest is under construction...</h2><div># node fundation
+sponsored by Joyent, a software company specializing in high-performance cloud computing
+Node.js Foundation. All Rights Reserved. Portions of this site originally © 2016 Joyent.
+Joyent uses and supports open source projects, including Ruby on Rails,[8] Node.js,[9][10] Illumos and SmartOS
+Node.js is a trademark of Joyent, Inc. and is used with its permission. Please review the Trademark Guidelines of the Node.js Foundation.
+Linux Foundation is a registered trademark of The Linux Foundation.
+Linux is a registered trademark of Linus Torvalds.
+
+# multithreading
+- child_process.fork()
+- cluster module
+
+# frameworks
+Connect, Express.js, Socket.IO, Koa.js, Hapi.js, Sails, Meteor, Derby
+
+# other
+- c++ addons
+- debugger (via chrome dev tools)
+- events emitter
+- fs
+- globals
+- require vs modules path
+- os/path/process/querystring/zlib
+- vm - sandboxing
+</div></section><section><h2>This is all for now...</h2></section><section><h2>Thanks!</h2></section></div></div><script src="bower_components/reveal-js/lib/js/head.min.js"></script><script src="bower_components/reveal-js/js/reveal.js"></script><script>Reveal.initialize({
+    progress: true,
+    slideNumber: false,
+    history: true,
+    dependencies: [
+        {
+            src: 'bower_components/highlightjs/highlight.pack.min.js',
+            async: true,
+            callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+        }
+    ]
+});</script></body></html>
