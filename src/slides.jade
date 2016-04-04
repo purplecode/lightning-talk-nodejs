@@ -23,10 +23,20 @@ section
             li 2014 - Fedor Indutny started io.js, a fork of Node.js
             li 2015 - Node.js v0.12 and io.js v3.3 merged back into Node v4.0
 
-section
+    section
+        h2 Node.js Foundation
+        blockquote(cite="https://nodejs.org/en/foundation/").
+            The Node.js Foundation's mission is to enable widespread adoption and help accelerate development of Node.js and other related modules through an open governance model that encourages participation, technical contribution, and a framework for long term stewardship by an ecosystem invested in Node.js' success.
+        ul
+            li Node.js is a trademark of Joyent, Inc. (high-performance cloud computing)
+            li Foundation corporate members: IBM, Intel, Microsoft, RedHat, PayPal, Joyent...
+            li ~300 active contributors (~900 in total)
 
+section
     section
         h2 Architecture
+
+    section
         img(height=500 src="src/images/architecture.png")
         small @source: &nbsp;
             a(href="http://mcgill-csus.github.io/student_projects/Submission2.pdf") An Inside Look at the Architecture of NodeJS
@@ -65,33 +75,57 @@ section
             li child processes
             li thread pool
 
+    section
+        h2 Miscellaneous
+        ul
+            li possibility to write C++ addons
+            li debugging - IDE ot Chrome Dev Tools
+            li build in modules: fs, os, path, querystring, zlib, vm, crypto
+            li globals: console, require, process, module, exports, global
+
 section
-    h2 The rest is under construction...
-    div.
-        # node fundation
-        sponsored by Joyent, a software company specializing in high-performance cloud computing
-        Node.js Foundation. All Rights Reserved. Portions of this site originally © 2016 Joyent.
-        Joyent uses and supports open source projects, including Ruby on Rails,[8] Node.js,[9][10] Illumos and SmartOS
-        Node.js is a trademark of Joyent, Inc. and is used with its permission. Please review the Trademark Guidelines of the Node.js Foundation.
-        Linux Foundation is a registered trademark of The Linux Foundation.
-        Linux is a registered trademark of Linus Torvalds.
+    section
+        h2 Code
 
-        # multithreading
-        - child_process.fork()
-        - cluster module
+    section
+        h2 Frameworks
+        ul
+            li Express.js, Hapi.js, Koa.js - minimalist
+            li Socket.io - for real-time apps
+            li Sails, Derby - MVC frameworks
+            li Meteor - pure magic
 
-        # frameworks
-        Connect, Express.js, Socket.IO, Koa.js, Hapi.js, Sails, Meteor, Derby
+    section
+        h2 Scaling
+        pre
+            code.hljs.javascript.
+                const cluster = require('cluster');
+                const http = require('http');
+                const numberOfCpus = require('os').cpus().length;
 
-        # other
-        - c++ addons
-        - debugger (via chrome dev tools)
-        - events emitter
-        - fs
-        - globals
-        - require vs modules path
-        - os/path/process/querystring/zlib
-        - vm - sandboxing
+                if (cluster.isMaster) {
+                  for (var i = 0; i < numberOfCpus; i++) {
+                    cluster.fork();
+                  }
+                  cluster.on('exit', (worker, code, signal) => {
+                    console.log(`worker ${worker.process.pid} died`);
+                  });
+                } else {
+                  // Workers can share any TCP connection, in this case it is an HTTP server
+                  http.createServer((req, res) => {
+                    res.writeHead(200);
+                    res.end('hello world\n');
+                  }).listen(8000);
+                }
+        small @source: &nbsp;
+            a(href="https://nodejs.org/api/cluster.html") https://nodejs.org/api/cluster.html
+
+    section
+        h2 The rest is under construction...
+        div.
+            # multithreading
+            - child_process.fork()
+            - cluster module
 
 section
     h2 This is all for now...
