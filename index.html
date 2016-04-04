@@ -36,27 +36,41 @@
 .reveal section blockquote {
     width: 100%;
     margin: 15px 0 15px 0;
-}</style></head><body><a href="https://github.com/purplecode/lightning-talk-nodejs" title="Fork me on Github" class="github-fork-ribbon right-top"></a><div class="reveal"><div class="slides"><section><h1>Node.js</h1><h1>Introduction</h1><h4>by Mateusz Jaworski</h4><h4>April 2016</h4></section><section><section><img src="src/images/nodejs.png" class="logo"><ul><li>open-source, cross-platform, MIT license</li><li>asynchronous, event driven</li><li>event loop as a language construct not library</li><li>shell/repl (read-eval-print-loop)</li><li>npm - package manager</li><li>other: Twisted (python), Vert.x (Java, Ruby, Scala, Clojure...)</li></ul></section><section><h2>History</h2><ul><li>2009 - originally written by Ryan Dahl</li><li>2011 - added npm and support for Windows</li><li>2014 - Fedor Indutny started io.js, a fork of Node.js</li><li>2015 - Node.js v0.12 and io.js v3.3 merged back into Node v4.0</li></ul></section><section><h2>Node.js Foundation</h2><blockquote cite="https://nodejs.org/en/foundation/">The Node.js Foundation's mission is to enable widespread adoption and help accelerate development of Node.js and other related modules through an open governance model that encourages participation, technical contribution, and a framework for long term stewardship by an ecosystem invested in Node.js' success.</blockquote><ul><li>Node.js is a trademark of Joyent, Inc. (high-performance cloud computing)</li><li>Foundation corporate members: IBM, Intel, Microsoft, RedHat, PayPal, Joyent...</li><li>~300 active contributors (~900 in total)</li></ul></section></section><section><section><h2>Architecture</h2></section><section><img height="500" src="src/images/architecture.png"><small>@source: &nbsp;<a href="http://mcgill-csus.github.io/student_projects/Submission2.pdf">An Inside Look at the Architecture of NodeJS</a></small></section><section><h2>Architecture</h2><ul><li>core written in C, C++</li><li>single main thread, non-blocking I/O calls</li><li>no cost of thread context switching</li><li>thread pool for parallel tasks, when done main thread wakes up and executes the registered callback</li><li>registered within operating system, operating system issues a callback on connection</li></ul></section><section><img src="src/images/v8.png" class="logo"><h2>Google’s V8 JavaScript engine</h2><ul><li>compiles JavaScript into native code</li><li>garbage collector</li><li>optimizer</li><li>re-optimizer (at runtime)<ul><li>based on heuristics of the code's execution profile</li><li>inline expansion</li><li>inline caching</li><li>copy elision</li></ul></li></ul></section><section><img src="src/images/libuv.png" class="logo"><h2>libuv - multi-platform asynchronous I/O</h2><ul><li>developed for use by Node.js, also used by others</li><li>event loop</li><li>asynchronous TCP/UDP sockets and DNS resolution</li><li>asynchronous file system operations</li><li>child processes</li><li>thread pool</li></ul></section><section><h2>Miscellaneous</h2><ul><li>possibility to write C++ addons</li><li>debugging - IDE ot Chrome Dev Tools</li><li>build in modules: fs, os, path, querystring, zlib, vm, crypto</li><li>globals: console, require, process, module, exports, global</li></ul></section></section><section><section><h2>Code</h2></section><section><h2>Frameworks</h2><ul><li>Express.js, Hapi.js, Koa.js - minimalist</li><li>Socket.io - for real-time apps</li><li>Sails, Derby - MVC frameworks</li><li>Meteor - pure magic</li></ul></section><section><h2>Scaling</h2><pre><code class="hljs javascript">const cluster = require('cluster');
+}</style></head><body><a href="https://github.com/purplecode/lightning-talk-nodejs" title="Fork me on Github" class="github-fork-ribbon right-top"></a><div class="reveal"><div class="slides"><section><h1>Node.js</h1><h1>Introduction</h1><h4>by Mateusz Jaworski</h4><h4>April 2016</h4></section><section><section><img src="src/images/nodejs.png" class="logo"><ul><li>open-source, cross-platform, MIT license</li><li>asynchronous, event driven</li><li>event loop as a language construct not library</li><li>shell/repl (read-eval-print-loop)</li><li>npm - package manager</li><li>other: Twisted (python), Vert.x (Java, Ruby, Scala, Clojure...)</li></ul></section><section><h2>History</h2><ul><li>2009 - originally written by Ryan Dahl</li><li>2011 - added npm and support for Windows</li><li>2014 - Fedor Indutny started io.js, a fork of Node.js</li><li>2015 - Node.js v0.12 and io.js v3.3 merged back into Node v4.0</li></ul></section><section><h2>Node.js Foundation</h2><blockquote cite="https://nodejs.org/en/foundation/">The Node.js Foundation's mission is to enable widespread adoption and help accelerate development of Node.js and other related modules through an open governance model that encourages participation, technical contribution, and a framework for long term stewardship by an ecosystem invested in Node.js' success.</blockquote><ul><li>Node.js is a trademark of Joyent, Inc. (high-performance cloud computing)</li><li>Foundation corporate members: IBM, Intel, Microsoft, RedHat, PayPal, Joyent...</li><li>~300 active contributors (~900 in total)</li></ul></section></section><section><section><h2>Architecture</h2></section><section><img height="500" src="src/images/architecture.png"><small>@source: &nbsp;<a href="http://mcgill-csus.github.io/student_projects/Submission2.pdf">An Inside Look at the Architecture of NodeJS</a></small></section><section><h2>Architecture</h2><ul><li>core written in C, C++</li><li>single main thread, non-blocking I/O calls</li><li>no cost of thread context switching</li><li>thread pool for parallel tasks, when done main thread wakes up and executes the registered callback</li><li>registered within operating system, operating system issues a callback on connection</li></ul></section><section><img src="src/images/v8.png" class="logo"><h2>Google’s V8 JavaScript engine</h2><ul><li>compiles JavaScript into native code</li><li>garbage collector</li><li>optimizer</li><li>re-optimizer (at runtime)<ul><li>based on heuristics of the code's execution profile</li><li>inline expansion</li><li>inline caching</li><li>copy elision</li></ul></li></ul></section><section><img src="src/images/libuv.png" class="logo"><h2>libuv - multi-platform asynchronous I/O</h2><ul><li>developed for use by Node.js, also used by others</li><li>event loop</li><li>asynchronous TCP/UDP sockets and DNS resolution</li><li>asynchronous file system operations</li><li>child processes</li><li>thread pool</li></ul></section><section><h2>Miscellaneous</h2><ul><li>possibility to write C++ addons</li><li>debugging - IDE ot Chrome Dev Tools</li><li>build in modules: fs, os, path, querystring, zlib, vm, crypto</li><li>globals: console, require, process, module, exports, global</li></ul></section></section><section><section><h2>Code</h2></section><section><h2>Frameworks</h2><ul><li>Express.js, Hapi.js, Koa.js - minimalist</li><li>Socket.io - for real-time apps</li><li>Sails, Derby - MVC frameworks</li><li>Meteor - pure magic</li></ul></section><section><h2>tbc</h2></section></section><section><section><h2>Scaling</h2></section><section><h2>Scaling - cluster</h2><pre><code class="hljs javascript">const cluster = require('cluster');
 const http = require('http');
 const numberOfCpus = require('os').cpus().length;
 
-if (cluster.isMaster) {
-  for (var i = 0; i < numberOfCpus; i++) {
-    cluster.fork();
-  }
-  cluster.on('exit', (worker, code, signal) => {
-    console.log(`worker ${worker.process.pid} died`);
-  });
-} else {
-  // Workers can share any TCP connection, in this case it is an HTTP server
-  http.createServer((req, res) => {
-    res.writeHead(200);
-    res.end('hello world\n');
-  }).listen(8000);
-}</code></pre><small>@source: &nbsp;<a href="https://nodejs.org/api/cluster.html">https://nodejs.org/api/cluster.html</a></small></section><section><h2>The rest is under construction...</h2><div># multithreading
-- child_process.fork()
-- cluster module
-</div></section></section><section><h2>This is all for now...</h2></section><section><h2>Thanks!</h2></section></div></div><script src="bower_components/reveal-js/lib/js/head.min.js"></script><script src="bower_components/reveal-js/js/reveal.js"></script><script>Reveal.initialize({
+function spawnMaster() {
+    for (var i = 0; i < numberOfCpus; i++) {
+        cluster.fork();
+    }
+    cluster.on('exit', (worker, code, signal) => {
+        console.log(`worker ${worker.process.pid} died`);
+    });
+}
+
+function spawnFork() {
+    // Workers can share any TCP connection, in this case it is an HTTP server
+    http.createServer((req, res) => {
+        res.writeHead(200);
+        res.end('hello world\n');
+    }).listen(8000);
+}
+
+cluster.isMaster ? spawnMaster() : spawnFork();
+</code></pre></section><section><h2>Scaling - forks</h2><pre><div class="filename">main.js</div><code class="hjls javascript">const child_process = require('child_process');
+const fork = child_process.fork('fork.js');
+
+fork.on('message', message => {
+  console.log('Parent got message: ', message);
+});
+
+fork.send({ data: 123 });</code></pre><pre><div class="filename">fork.js</div><code class="hjls javascript">process.on('message', message => {
+    console.log('Child got message:', message);
+
+    process.send({ data: 456 });
+});
+</code></pre></section></section><section><h2>This is all for now...</h2></section><section><h2>Thanks!</h2></section></div></div><script src="bower_components/reveal-js/lib/js/head.min.js"></script><script src="bower_components/reveal-js/js/reveal.js"></script><script>Reveal.initialize({
     progress: true,
     slideNumber: false,
     history: true,

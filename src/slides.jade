@@ -96,36 +96,60 @@ section
             li Meteor - pure magic
 
     section
+        h2 tbc
+
+section
+    section
         h2 Scaling
+
+    section
+        h2 Scaling - cluster
         pre
             code.hljs.javascript.
                 const cluster = require('cluster');
                 const http = require('http');
                 const numberOfCpus = require('os').cpus().length;
 
-                if (cluster.isMaster) {
-                  for (var i = 0; i < numberOfCpus; i++) {
-                    cluster.fork();
-                  }
-                  cluster.on('exit', (worker, code, signal) => {
-                    console.log(`worker ${worker.process.pid} died`);
-                  });
-                } else {
-                  // Workers can share any TCP connection, in this case it is an HTTP server
-                  http.createServer((req, res) => {
-                    res.writeHead(200);
-                    res.end('hello world\n');
-                  }).listen(8000);
+                function spawnMaster() {
+                    for (var i = 0; i < numberOfCpus; i++) {
+                        cluster.fork();
+                    }
+                    cluster.on('exit', (worker, code, signal) => {
+                        console.log(`worker ${worker.process.pid} died`);
+                    });
                 }
-        small @source: &nbsp;
-            a(href="https://nodejs.org/api/cluster.html") https://nodejs.org/api/cluster.html
+
+                function spawnFork() {
+                    // Workers can share any TCP connection, in this case it is an HTTP server
+                    http.createServer((req, res) => {
+                        res.writeHead(200);
+                        res.end('hello world\n');
+                    }).listen(8000);
+                }
+
+                cluster.isMaster ? spawnMaster() : spawnFork();
 
     section
-        h2 The rest is under construction...
-        div.
-            # multithreading
-            - child_process.fork()
-            - cluster module
+        h2 Scaling - forks
+        pre
+            .filename main.js
+            code.hjls.javascript.
+                const child_process = require('child_process');
+                const fork = child_process.fork('fork.js');
+
+                fork.on('message', message => {
+                  console.log('Parent got message: ', message);
+                });
+
+                fork.send({ data: 123 });
+        pre
+            .filename fork.js
+            code.hjls.javascript.
+                process.on('message', message => {
+                    console.log('Child got message:', message);
+
+                    process.send({ data: 456 });
+                });
 
 section
     h2 This is all for now...
