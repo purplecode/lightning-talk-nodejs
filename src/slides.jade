@@ -96,7 +96,105 @@ section
             li Meteor - pure magic
 
     section
-        h2 tbc
+        h2 Basics
+        pre
+            code.hljs.javascript.
+                var http = require('http');
+
+                var handleRequest  = function (req, res) {
+                    res.writeHead(200, {'Content-Type': 'text/plain'});
+                    res.end('Hit: ' + req.url);
+                };
+
+                http.createServer(handleRequest).listen(3000, function () {
+                    console.log("Server listening on: http://localhost:3000");
+                });
+
+    section
+        h2 Express
+        pre
+            code.hljs.javascript.
+                var express = require('express');
+                var app = express();
+
+                app.get('/', function (req, res) {
+                    res.send('Hello GET');
+                });
+
+                app.post('/', function (req, res) {
+                    res.send('Hello POST!');
+                });
+
+                app.listen(3000, function () {
+                    console.log("Server listening on: http://localhost:3000");
+                });
+
+    section
+        h2 Express - static content
+        pre
+            code.hljs.javascript.
+                var express = require('express');
+                var app = express();
+
+                app.use('/static', express.static(__dirname + 'public'));
+
+                app.listen(3000, function () {
+                    console.log("Server listening on: http://localhost:3000");
+                });
+
+    section
+        h2 Express - jade templates
+        span app.js
+        pre
+            code.hljs.javascript.
+                var express = require('express');
+                var app = express();
+
+                app.set('views', __dirname + '/views');
+                app.set('view engine', 'jade');
+
+                app.get('/', function(req, res){
+                    res.render("index", {message: 'Hello world!'});
+                });
+
+                app.listen(3000, function () {
+                    console.log("Server listening on: http://localhost:3000");
+                });
+
+        span views/index.jade
+        pre
+            code.hljs.javascript.
+                html
+                  head
+                    title title
+                  body
+                    h1= message
+
+    section
+        h2 Live demo
+        pre
+            code.hljs.javascript.
+                npm install express-generator -g
+                express myapp
+
+    section
+        h2 Forever
+        pre
+            code.hljs.javascript.
+                npm install forever -g
+                forever start app.js
+        pre
+            code.hljs.javascript.
+                NODE_ENV=production forever start -l forever.log -o out.log -e err.log app.js
+        pre
+            code.hljs.javascript.
+                forever list
+        pre
+            code.hljs.javascript.
+                forever stop app.js
+        pre
+            code.hljs.javascript.
+                forever stopall
 
 section
     section
